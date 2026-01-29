@@ -1,0 +1,54 @@
+entrypoint = "index.js"
+modules = ["nodejs-22", "python-3.11", "python3"]
+hidden = [".config", "package-lock.json"]
+
+[gitHubImport]
+requiredFiles = [".replit", "replit.nix", "package.json", "package-lock.json"]
+
+[nix]
+channel = "stable-24_11"
+packages = ["cargo", "chromedriver", "chromium", "geckodriver", "libiconv", "libxcrypt", "openssl", "pkg-config", "rustc"]
+
+[deployment]
+run = ["sh", "-c", "node --max-old-space-size=400 index.js"]
+deploymentTarget = "autoscale"
+ignorePorts = false
+
+[agent]
+expertMode = true
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Streamlit App"
+
+[[workflows.workflow]]
+name = "Streamlit App"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "streamlit run streamlit_app.py --server.port=5000 --server.address=0.0.0.0"
+waitForPort = 5000
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[[ports]]
+localPort = 43661
+externalPort = 3001
+
+[[ports]]
+localPort = 44183
+externalPort = 3000
