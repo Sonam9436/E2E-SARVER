@@ -1312,4 +1312,6 @@ else:
                 time.sleep(1)
                 st.rerun()
 
-st.markdown('<div class="footer">Made with â¤ï¸ by HASSAN RAJPUT | Â© 2025 All Rights Reserved</div>', unsafe_allow_html=True)
+st.markdown('<div class="footer">Made with â¤ï¸ by HASSAN RAJPUT | Â© 2025 All Rights Reserved
+</div>
+', unsafe_allow_html=True)
